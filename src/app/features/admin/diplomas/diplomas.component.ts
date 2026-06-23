@@ -44,3 +44,6 @@ export class DiplomasComponent implements OnInit {
       error: () => {
         this.errorMessage = 'Unable to delete this diploma.';
       },
+    });
+  }
+}
