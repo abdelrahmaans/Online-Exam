@@ -113,8 +113,8 @@ export class LoginComponent {
                     // Store user data and token in auth state service
                     this._authStateService.setAuthState(loginPayload.user, loginPayload.token);
 
-                    // Navigate to home
-                    this._router.navigate(['/diplomas']);
+                    const returnUrl = this._route.snapshot.queryParamMap.get('returnUrl');
+                    this._router.navigateByUrl(returnUrl || '/diplomas');
                     return;
                 }
 
