@@ -18,8 +18,8 @@ export const routes: Routes = [
         path: '',
         loadComponent: () =>
             import('./core/layouts/blank-layout/blank-layout.component').then((m) => m.BlankLayoutComponent),
-        children: [
         canActivateChild: [authGuard],
+        children: [
             {
                 path: 'diplomas',
                 title: 'Diplomas',

@@ -11,3 +11,4 @@ export const authGuard: CanActivateChildFn = (_, state) => {
     }
 
     return router.createUrlTree(['/login'], { queryParams: { returnUrl: state.url } });
+};
