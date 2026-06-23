@@ -1,0 +1,24 @@
+<section class="admin-page">
+  <header class="page-header"><div><p class="eyebrow">Administration</p><h1>Diplomas</h1></div></header>
+  @if (isLoading) {
+  <p class="state-message">Loading diplomas...</p>
+  } @else if (errorMessage) {
+  <p class="state-message state-error" role="alert">{{ errorMessage }}</p>
+  } @else {
+  <div class="table-wrap"><table>
+    <thead><tr><th>Diploma</th><th>Description</th><th>Protected</th><th></th></tr></thead>
+    <tbody>
+      @for (diploma of diplomas; track diploma.id) {
+      <tr>
+        <td><strong>{{ diploma.title }}</strong></td>
+        <td>{{ diploma.description || '?' }}</td>
+        <td>{{ diploma.immutable ? 'Yes' : 'No' }}</td>
+        <td><button type="button" class="danger-btn" [disabled]="diploma.immutable" (click)="deleteDiploma(diploma)">Delete</button></td>
+      </tr>
+      } @empty {
+      <tr><td colspan="4">No diplomas found.</td></tr>
+      }
+    </tbody>
+  </table></div>
+  }
+</section>

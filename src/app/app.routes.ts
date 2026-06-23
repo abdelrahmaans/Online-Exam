@@ -49,6 +49,12 @@ export const routes: Routes = [
                 loadComponent: () => import('./features/admin/audit-log/audit-log.component').then((m) => m.AuditLogComponent),
             },
             {
+                path: 'admin/diplomas',
+                title: 'Manage Diplomas',
+                canActivate: [adminGuard],
+                loadComponent: () => import('./features/admin/diplomas/diplomas.component').then((m) => m.DiplomasComponent),
+            },
+            {
                 path: 'account',
                 title: 'Account Settings',
                 loadComponent: () =>
