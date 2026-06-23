@@ -24,6 +24,10 @@
         <div class="loading-state">
             <p>Loading questions...</p>
         </div>
+        } @else if (loadError) {
+        <div class="empty-state" role="alert">
+            <p>{{ loadError }}</p>
+        </div>
         } @else if (currentQuestion) {
         <div class="question-card">
             <h3>{{ currentQuestion.text }}</h3>

@@ -30,6 +30,7 @@ export class ExamQuestionsComponent implements OnInit {
     selectedAnswers: Map<string, string> = new Map();
     isSubmitting = false;
     isLoading = true;
+    loadError = '';
     hoveredAnswerId: string | null = null;
 
     get currentQuestion(): Question | undefined {
@@ -58,12 +59,13 @@ export class ExamQuestionsComponent implements OnInit {
                 this.questions = response.payload?.questions ?? [];
                 this.totalQuestions = this.questions.length;
                 this.isLoading = false;
+                this.loadError = '';
             },
-            error: (err) => {
-                console.error('Failed to load questions', err);
+            error: () => {
                 this.questions = [];
                 this.totalQuestions = 0;
                 this.isLoading = false;
+                this.loadError = 'Unable to load questions. Please try again later.';
             },
         });
     }
