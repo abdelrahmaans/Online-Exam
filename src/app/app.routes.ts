@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { AUTH_ROUTES } from './features/auth/auth.routes';
+import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
     {
@@ -18,6 +19,7 @@ export const routes: Routes = [
         loadComponent: () =>
             import('./core/layouts/blank-layout/blank-layout.component').then((m) => m.BlankLayoutComponent),
         children: [
+        canActivateChild: [authGuard],
             {
                 path: 'diplomas',
                 title: 'Diplomas',
