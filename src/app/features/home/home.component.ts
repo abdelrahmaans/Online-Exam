@@ -25,14 +25,16 @@ export class HomeComponent implements OnInit {
   getAllDiplomas(): void {
     this._diplomasService.getAllDiplomas().subscribe({
       next: (response) => {
-        console.log('Diplomas fetched successfully:', response);
         this.responseStatus = response.status;
         this.responseCode = response.code;
         this.diplomasList = response.payload?.data ?? [];
         this.metadata = response.payload?.metadata ?? null;
       },
-      error: (error) => {
-        console.error('Error fetching diplomas:', error);
+      error: () => {
+        this.responseStatus = false;
+        this.responseCode = 0;
+        this.diplomasList = [];
+        this.metadata = null;
       }
     });
   }
