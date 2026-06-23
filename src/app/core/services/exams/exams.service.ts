@@ -18,4 +18,8 @@ export class ExamsService {
     return this._httpClient.get<Exams>(environment.baseUrl + 'exams', { params });
   }
 
+
+  getExamById(id: string): Observable<unknown> {
+    return this._httpClient.get(environment.baseUrl + `exams/${id}`);
+  }
 }
