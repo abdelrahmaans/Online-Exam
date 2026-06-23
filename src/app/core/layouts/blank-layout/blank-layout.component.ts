@@ -1,5 +1,5 @@
 import { Component, inject, signal, effect } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthStateService } from '../../services/auth-state.service';
 
@@ -11,6 +11,7 @@ import { AuthStateService } from '../../services/auth-state.service';
 })
 export class BlankLayoutComponent {
   private authStateService = inject(AuthStateService);
+  private readonly router = inject(Router);
 
   user = signal({
     firstName: 'Guest',
@@ -46,6 +47,8 @@ export class BlankLayoutComponent {
 
   logout(): void {
     this.closeDropdown();
+    this.authStateService.clearAuthState();
+    this.router.navigate(['/login']);
   }
 }
 

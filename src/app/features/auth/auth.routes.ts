@@ -21,5 +21,14 @@ export const AUTH_ROUTES: Routes = [
         title: 'Forgot Password',
         loadComponent: () => import('./forgot-password/forgot-password.component').then((m) => m.ForgotPasswordComponent),
     },
-    // Verify OTP and Reset Password are intentionally excluded from app routes for now.
+    {
+        path: 'verify-otp',
+        title: 'Verify Email',
+        loadComponent: () => import('./verify-otp/verify-otp.component').then((m) => m.VerifyOtpComponent),
+    },
+    {
+        path: 'reset-password',
+        title: 'Reset Password',
+        loadComponent: () => import('./reset-password/reset-password.component').then((m) => m.ResetPasswordComponent),
+    },
 ];
