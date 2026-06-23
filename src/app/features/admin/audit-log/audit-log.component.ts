@@ -30,3 +30,9 @@ export class AuditLogComponent implements OnInit {
                 this.isLoading = false;
             },
             error: () => {
+                this.errorMessage = 'Unable to load the audit log.';
+                this.isLoading = false;
+            },
+        });
+    }
+}
