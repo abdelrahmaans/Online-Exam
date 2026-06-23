@@ -16,7 +16,7 @@ export interface Question {
     immutable: boolean;
     createdAt: string;
     updatedAt: string;
-    options: Answer[];
+    answers: Answer[];
     exam: ExamRef;
 }
 
@@ -38,7 +38,7 @@ export interface SubmissionPayload {
 
 export interface SubmissionAnswer {
     questionId: string;
-    selectedId: string;
+    answerId: string;
 }
 
 export interface SubmissionResponse {
@@ -48,16 +48,23 @@ export interface SubmissionResponse {
 }
 
 export interface SubmissionResult {
-    submissionId: string;
-    score: number;
-    correctAnswers: number;
-    totalQuestions: number;
-    correctAnswersList: CorrectAnswer[];
+    submission: ExamSubmission;
+    analytics: SubmissionAnalytics[];
 }
 
-export interface CorrectAnswer {
+export interface ExamSubmission {
+    id: string;
+    examId: string;
+    score: number | null;
+    totalQuestions: number;
+    correctAnswers: number;
+    wrongAnswers: number;
+}
+
+export interface SubmissionAnalytics {
     questionId: string;
-    correctAnswerId: string;
-    selectedAnswerId: string;
+    questionText: string;
+    selectedAnswer: Answer | null;
     isCorrect: boolean;
+    correctAnswer: Answer | null;
 }

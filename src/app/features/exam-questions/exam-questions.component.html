@@ -33,7 +33,7 @@
             <h3>{{ currentQuestion.text }}</h3>
 
             <div class="answers-grid">
-                @for (option of currentQuestion.options; track option.id) {
+                @for (option of currentQuestion.answers; track option.id) {
                 <button type="button" class="answer-row" [class.answer-row-selected]="isAnswerSelected(option.id)"
                     [class.answer-row-hovered]="hoveredAnswerId === option.id" (click)="selectAnswer(option.id)"
                     (mouseenter)="hoveredAnswerId = option.id" (mouseleave)="hoveredAnswerId = null">

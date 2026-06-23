@@ -24,10 +24,31 @@ export class ExamResultsComponent implements OnInit {
         total: 0,
     };
 
-    answers: any[] = [];
+    answers: { question: string; selected: string; correct: string; isCorrect: boolean }[] = [];
 
     ngOnInit(): void {
         this.loadDiplomaTitle();
+        const navigationResult = this.router.getCurrentNavigation()?.extras.state?.['result'] as SubmissionResult | undefined;
+        this.setResult(navigationResult ?? history.state?.result);
+    }
+
+    private setResult(result: SubmissionResult | undefined): void {
+        if (!result) {
+            return;
+        }
+
+        this.score = {
+            correct: result.submission.correctAnswers,
+            wrong: result.submission.wrongAnswers,
+            total: result.submission.totalQuestions,
+        };
+
+        this.answers = result.analytics.map((item) => ({
+            question: item.questionText,
+            selected: item.selectedAnswer?.text ?? 'No answer selected',
+            correct: item.correctAnswer?.text ?? 'No correct answer available',
+            isCorrect: item.isCorrect,
+        }));
     }
 
     private loadDiplomaTitle(): void {

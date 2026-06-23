@@ -105,7 +105,7 @@ export class ExamQuestionsComponent implements OnInit {
         this.isSubmitting = true;
         const answers: SubmissionAnswer[] = Array.from(this.selectedAnswers.entries()).map(([questionId, answerId]) => ({
             questionId,
-            selectedId: answerId,
+            answerId,
         }));
 
         this.submissionsService.submitExam({
