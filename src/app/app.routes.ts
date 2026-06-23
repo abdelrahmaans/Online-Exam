@@ -47,6 +47,7 @@ export const routes: Routes = [
                 title: 'Audit Log',
                 loadComponent: () => import('./features/admin/audit-log/audit-log.component').then((m) => m.AuditLogComponent),
             },
+            {
                 path: 'account',
                 title: 'Account Settings',
                 loadComponent: () =>
