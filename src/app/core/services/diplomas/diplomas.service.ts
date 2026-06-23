@@ -17,4 +17,15 @@ export class DiplomasService {
     return this._httpClient.get<Diplomas>(environment.baseUrl + `diplomas/${id}`);
   }
   
+  createDiploma(payload: { title: string; description?: string; image?: string }): Observable<unknown> {
+    return this._httpClient.post(environment.baseUrl + 'diplomas', payload);
+  }
+
+  updateDiploma(id: string, payload: { title?: string; description?: string; image?: string }): Observable<unknown> {
+    return this._httpClient.patch(environment.baseUrl + `diplomas/${id}`, payload);
+  }
+
+  deleteDiploma(id: string): Observable<unknown> {
+    return this._httpClient.delete(environment.baseUrl + `diplomas/${id}`);
+  }
 }
