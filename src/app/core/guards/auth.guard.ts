@@ -12,3 +12,11 @@ export const authGuard: CanActivateChildFn = (_, state) => {
 
     return router.createUrlTree(['/login'], { queryParams: { returnUrl: state.url } });
 };
+
+export const adminGuard: CanActivateChildFn = () => {
+    const authState = inject(AuthStateService);
+    const router = inject(Router);
+    const role = authState.getUser()?.role;
+
+    return role === 'ADMIN' || role === 'SUPER_ADMIN' ? true : router.createUrlTree(['/diplomas']);
+};
