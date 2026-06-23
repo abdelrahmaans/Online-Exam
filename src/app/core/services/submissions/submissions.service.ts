@@ -12,13 +12,6 @@ export class SubmissionsService {
     private readonly _httpClient = inject(HttpClient);
 
     submitExam(payload: SubmissionPayload): Observable<SubmissionResponse> {
-
-    getMySubmissions(): Observable<unknown> {
-        return this._httpClient.get(environment.baseUrl + 'submissions');
-    }
-
-    getSubmissionById(id: string): Observable<unknown> {
-        return this._httpClient.get(environment.baseUrl + `submissions/${id}`);
         return this._httpClient.post<SubmissionResponse>(environment.baseUrl + 'submissions', payload);
     }
 

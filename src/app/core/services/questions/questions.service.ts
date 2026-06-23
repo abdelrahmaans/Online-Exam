@@ -17,20 +17,5 @@ export class QuestionsService {
   getQuestionById(questionId: string): Observable<QuestionsResponse> {
     return this._httpClient.get<QuestionsResponse>(environment.baseUrl + `questions/${questionId}`);
   }
-  createQuestion(examId: string, payload: { text: string; answers: { text: string; isCorrect: boolean }[] }): Observable<unknown> {
-    return this._httpClient.post(environment.baseUrl + `questions/exam/${examId}`, payload);
-  }
-
-  createQuestionsBulk(examId: string, questions: { text: string; answers: { text: string; isCorrect: boolean }[] }[]): Observable<unknown> {
-    return this._httpClient.post(environment.baseUrl + `questions/exam/${examId}/bulk`, { questions });
-  }
-
-  updateQuestion(id: string, payload: { text?: string; answers?: { text: string; isCorrect: boolean }[] }): Observable<unknown> {
-    return this._httpClient.patch(environment.baseUrl + `questions/${id}`, payload);
-  }
-
-  deleteQuestion(id: string): Observable<unknown> {
-    return this._httpClient.delete(environment.baseUrl + `questions/${id}`);
-  }
 
 }

@@ -16,21 +16,6 @@ export class ExamsService {
   getDiplomaExams(id: string): Observable<Exams> {
     const params = new HttpParams().set('diplomaId', id);
     return this._httpClient.get<Exams>(environment.baseUrl + 'exams', { params });
-  getExamById(id: string): Observable<unknown> {
-    return this._httpClient.get(environment.baseUrl + `exams/${id}`);
-  }
-
-  createExam(payload: { diplomaId: string; title: string; description?: string; image?: string; duration: number }): Observable<unknown> {
-    return this._httpClient.post(environment.baseUrl + 'exams', payload);
-  }
-
-  updateExam(id: string, payload: { title?: string; description?: string; image?: string; duration?: number }): Observable<unknown> {
-    return this._httpClient.patch(environment.baseUrl + `exams/${id}`, payload);
-  }
-
-  deleteExam(id: string): Observable<unknown> {
-    return this._httpClient.delete(environment.baseUrl + `exams/${id}`);
-  }
   }
 
 }
