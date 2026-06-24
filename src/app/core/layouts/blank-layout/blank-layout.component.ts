@@ -19,6 +19,7 @@ export class BlankLayoutComponent {
   });
 
   showUserDropdown = signal(false);
+  isAdmin = false;
 
   readonly mainLinks = [
     { label: 'Diplomas', route: '/diplomas' },

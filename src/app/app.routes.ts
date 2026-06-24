@@ -55,6 +55,12 @@ export const routes: Routes = [
                 loadComponent: () => import('./features/admin/diplomas/diplomas.component').then((m) => m.DiplomasComponent),
             },
             {
+                path: 'admin/exams',
+                title: 'Manage Exams',
+                canActivate: [adminGuard],
+                loadComponent: () => import('./features/admin/exams-management/exams-management.component').then((m) => m.ExamsManagementComponent),
+            },
+            {
                 path: 'account',
                 title: 'Account Settings',
                 loadComponent: () =>

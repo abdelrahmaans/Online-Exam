@@ -1,0 +1,18 @@
+﻿<section class="admin-page">
+  <header class="page-header"><p class="eyebrow">Administration</p><h1>Exam Management</h1></header>
+  @if (errorMessage) { <p class="state-message state-error" role="alert">{{ errorMessage }}</p> }
+  <form class="exam-form" [formGroup]="form" (ngSubmit)="saveExam()">
+    <label>Diploma<select formControlName="diplomaId" (change)="loadExams()">@for (diploma of diplomas; track diploma.id) { <option [value]="diploma.id">{{ diploma.title }}</option> }</select></label>
+    <label>Title<input formControlName="title" /></label>
+    <label>Duration<input type="number" min="1" formControlName="duration" /></label>
+    <label class="wide">Description<textarea rows="3" formControlName="description"></textarea></label>
+    <label class="wide">Image URL<input formControlName="image" /></label>
+    <div class="form-actions wide">@if (editingId) { <button type="button" class="secondary-btn" (click)="resetForm()">Cancel</button> }<button type="submit" class="primary-btn" [disabled]="isSaving">{{ editingId ? 'Update exam' : 'Add exam' }}</button></div>
+  </form>
+  @if (isLoading) { <p class="state-message">Loading exams...</p> } @else {
+    <div class="table-wrap"><table><thead><tr><th>Exam</th><th>Duration</th><th>Questions</th><th>Actions</th></tr></thead><tbody>
+      @for (exam of exams; track exam.id) { <tr><td><strong>{{ exam.title }}</strong><small>{{ exam.description }}</small></td><td>{{ exam.duration }} min</td><td>{{ exam.questionsCount }}</td><td class="row-actions"><button type="button" class="secondary-btn" (click)="editExam(exam)">Edit</button><button type="button" class="danger-btn" (click)="deleteExam(exam)">Delete</button></td></tr> }
+      @empty { <tr><td colspan="4">No exams found for this diploma.</td></tr> }
+    </tbody></table></div>
+  }
+</section>
