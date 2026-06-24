@@ -61,6 +61,12 @@ export const routes: Routes = [
                 loadComponent: () => import('./features/admin/exams-management/exams-management.component').then((m) => m.ExamsManagementComponent),
             },
             {
+                path: 'admin/questions',
+                title: 'Manage Questions',
+                canActivate: [adminGuard],
+                loadComponent: () => import('./features/admin/questions-management/questions-management.component').then((m) => m.QuestionsManagementComponent),
+            },
+            {
                 path: 'account',
                 title: 'Account Settings',
                 loadComponent: () =>

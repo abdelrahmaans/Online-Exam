@@ -1,0 +1,122 @@
+<section class="admin-page questions-admin">
+  <div class="admin-header">
+    <div>
+      <p class="eyebrow">Admin</p>
+      <h1>Questions Management</h1>
+      <p>Manage exam questions, answers, and bulk imports from one place.</p>
+    </div>
+  </div>
+
+  @if (errorMessage) { <p class="alert error">{{ errorMessage }}</p> }
+  @if (successMessage) { <p class="alert success">{{ successMessage }}</p> }
+
+  <form class="filters-card" [formGroup]="filterForm">
+    <label>
+      Diploma
+      <select formControlName="diplomaId" (change)="loadExams()">
+        @for (diploma of diplomas; track diploma.id) {
+        <option [value]="diploma.id">{{ diploma.title }}</option>
+        }
+      </select>
+    </label>
+    <label>
+      Exam
+      <select formControlName="examId" (change)="loadQuestions()">
+        @for (exam of exams; track exam.id) {
+        <option [value]="exam.id">{{ exam.title }}</option>
+        }
+      </select>
+    </label>
+    <label>
+      Search
+      <input formControlName="search" placeholder="Search question text" />
+    </label>
+    <button type="button" class="primary-btn" (click)="loadQuestions()" [disabled]="isLoadingQuestions">Load</button>
+  </form>
+
+  <div class="content-grid">
+    <form class="editor-card" [formGroup]="questionForm" (ngSubmit)="saveQuestion()">
+      <div class="card-title">
+        <h2>{{ editingId ? 'Edit Question' : 'Add Question' }}</h2>
+        @if (editingId) { <button type="button" class="link-btn" (click)="resetQuestionForm()">Cancel edit</button> }
+      </div>
+
+      <label>
+        Question text
+        <textarea rows="4" formControlName="text" placeholder="Write the question here"></textarea>
+      </label>
+
+      <div class="answers-grid">
+        <label><span>Answer 1</span><input formControlName="answer1" placeholder="Answer text" /></label>
+        <label><span>Answer 2</span><input formControlName="answer2" placeholder="Answer text" /></label>
+        <label><span>Answer 3</span><input formControlName="answer3" placeholder="Optional" /></label>
+        <label><span>Answer 4</span><input formControlName="answer4" placeholder="Optional" /></label>
+      </div>
+
+      <label>
+        Correct answer
+        <select formControlName="correctIndex">
+          <option [ngValue]="0">Answer 1</option>
+          <option [ngValue]="1">Answer 2</option>
+          <option [ngValue]="2">Answer 3</option>
+          <option [ngValue]="3">Answer 4</option>
+        </select>
+      </label>
+
+      <button class="primary-btn full" type="submit" [disabled]="isSaving">{{ isSaving ? 'Saving...' : (editingId ? 'Update Question' : 'Add Question') }}</button>
+    </form>
+
+    <form class="bulk-card" [formGroup]="bulkForm" (ngSubmit)="saveBulkQuestions()">
+      <div class="card-title">
+        <h2>Bulk Add</h2>
+        <button type="button" class="link-btn" (click)="fillBulkExample()">Fill example</button>
+      </div>
+      <p>Paste an array of questions matching the API format.</p>
+      <textarea rows="14" formControlName="questionsJson" placeholder='[{ "text": "...", "answers": [{ "text": "...", "isCorrect": true }] }]'></textarea>
+      <button class="secondary-btn full" type="submit" [disabled]="isBulkSaving">{{ isBulkSaving ? 'Importing...' : 'Import Bulk Questions' }}</button>
+    </form>
+  </div>
+
+  <section class="table-card">
+    <div class="card-title">
+      <h2>Questions</h2>
+      <span>{{ questions.length }} item(s)</span>
+    </div>
+
+    @if (isLoadingDiplomas || isLoadingExams || isLoadingQuestions) {
+    <p class="state-message">Loading...</p>
+    } @else if (!filterForm.controls.examId.value) {
+    <p class="state-message">Choose a diploma with exams to manage its questions.</p>
+    } @else if (!questions.length) {
+    <p class="state-message">No questions found for this exam.</p>
+    } @else {
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Question</th><th>Answers</th><th>Immutable</th><th>Actions</th></tr>
+        </thead>
+        <tbody>
+          @for (question of questions; track question.id) {
+          <tr>
+            <td><strong>{{ question.text }}</strong><small>{{ question.createdAt | date:'medium' }}</small></td>
+            <td>
+              <ul class="answers-list">
+                @for (answer of question.answers; track answer.id) {
+                <li [class.correct]="answer.isCorrect">{{ answer.text }}</li>
+                }
+              </ul>
+            </td>
+            <td>{{ question.immutable ? 'Yes' : 'No' }}</td>
+            <td class="row-actions">
+              <button type="button" class="secondary-btn" (click)="editQuestion(question)">Edit</button>
+              <button type="button" class="secondary-btn" (click)="toggleImmutable(question)">{{ question.immutable ? 'Unlock' : 'Lock' }}</button>
+              <button type="button" class="danger-btn" [disabled]="question.immutable" (click)="deleteQuestion(question)">Delete</button>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    }
+  </section>
+</section>
